@@ -25,8 +25,7 @@ namespace _08.ConsoleApplication
         private static object _token = new object();
         private static void DeliverCake(int v, int distabceToBuffet)
         {
-            Monitor.Enter(_token);
-            try
+            lock (_token)
             {
                 if (_cakes.Any(x => x.Name == "Apfelkuchen"))
                 {
@@ -45,10 +44,6 @@ namespace _08.ConsoleApplication
                 {
                     Console.WriteLine($"waiter-{v} - Cake not found");
                 }
-            }
-            finally
-            {
-                Monitor.Exit(_token);
             }
         }
     }
