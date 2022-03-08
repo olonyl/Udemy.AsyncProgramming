@@ -10,6 +10,7 @@ namespace _14.ConsoleApplication
         {
             Run2();
             Run();
+            Run3();
 
             Console.Read();
         }
@@ -20,6 +21,13 @@ namespace _14.ConsoleApplication
             RunTaskAsBakcground();
             var task = Task.Factory.StartNew<string>(() => GetMessage());
             Console.WriteLine(task.Result);
+        }
+
+        public static void Run3()
+        {
+            var string_ = Guid.NewGuid().ToString();
+            var task = Task.Factory.StartNew((o) => WhatsMyHome2(string_), CancellationToken.None, TaskCreationOptions.LongRunning);
+            task.Wait();
         }
         public static void Run2()
         {
@@ -66,6 +74,17 @@ namespace _14.ConsoleApplication
             string threadKind = isBackground ? "Background" : "Foreground";
 
             Console.WriteLine($"I am a {threadType} thread in the kind {threadKind}");
+        }
+        private static void WhatsMyHome2(string message)
+        {
+            Thread current = Thread.CurrentThread;
+            bool isThreadPool = current.IsThreadPoolThread;
+            bool isBackground = current.IsBackground;
+
+            string threadType = isThreadPool ? "Threadpool" : "Custom";
+            string threadKind = isBackground ? "Background" : "Foreground";
+
+            Console.WriteLine($"{message}");
         }
     }
 }
