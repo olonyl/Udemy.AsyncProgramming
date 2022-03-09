@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "16.ConsoleApplication", "16
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "17. Parallel", "17. Parallel\17. Parallel.csproj", "{28EB2D02-F7F5-45BF-94EB-F06EDA9941A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "18.Deadlock", "18.Deadlock\18.Deadlock.csproj", "{108052C5-001B-42EF-93BF-9D933E507C3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{28EB2D02-F7F5-45BF-94EB-F06EDA9941A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28EB2D02-F7F5-45BF-94EB-F06EDA9941A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28EB2D02-F7F5-45BF-94EB-F06EDA9941A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{108052C5-001B-42EF-93BF-9D933E507C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{108052C5-001B-42EF-93BF-9D933E507C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{108052C5-001B-42EF-93BF-9D933E507C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{108052C5-001B-42EF-93BF-9D933E507C3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
