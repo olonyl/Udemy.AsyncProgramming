@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Barrirer.cs" />
     <Compile Include="Deadlock.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Semaphore.cs" />
     <Compile Include="TimedMonitor.cs" />
   </ItemGroup>
   <ItemGroup>

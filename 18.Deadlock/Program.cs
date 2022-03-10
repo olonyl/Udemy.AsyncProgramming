@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace _18.Deadlock
 {
@@ -11,65 +12,60 @@ namespace _18.Deadlock
             // Deadlock.Improved();
             //Deadlock.LockWithTimedMonitor();
 
-            Barrirer.Run();
+            //Barrirer.Run();
             //Semaphore.Run();
 
+            DelegateProcessor.Run();
 
             Console.Read();
         }
-
-
     }
 
-    internal class Barrirer
+    internal class DelegateProcessor
     {
         public static void Run()
         {
-            new Thread(Write) { Name = "thread_1" }.Start(1);
-            new Thread(Write) { Name = "thread_2" }.Start(2);
-            new Thread(Write) { Name = "thread_3" }.Start(3);
+            Delegate();
         }
-        private static readonly Barrier _barrier = new Barrier(3, b => Console.WriteLine());
-        [ThreadStatic]
-        private static int _counter;
-
-        private static void Write(object obj)
+        private static void Exit()
         {
-            int step = (int)obj;
-            string threadName = Thread.CurrentThread.Name;
 
-            for (int i = 0; i < 10; i += step)
-            {
-                Thread.Sleep(500);
-                Console.WriteLine($"{threadName} arriving - index {i} - pool {_counter++}");
-                _barrier.SignalAndWait();
-            }
+        }
+        private static void Delegate()
+        {
+            int[] items = Enumerable.Range(0, 7).ToArray();
+
+            IEnumerable<int> result = items.Where(IsEven);
+
+
+            Func<int, bool> even = IsEven;
+            even = i => i % 2 == 0;
+
+            string value = result.Flatten();
+            Console.WriteLine(value);
+        }
+
+        private static bool IsEven(int i)
+        {
+            return i % 2 == 0;
         }
     }
 
-    internal class Semaphore
+    public static class Extensions
     {
-        public static void Run()
-        {
-            new Thread(Write) { Name = "thread_1" }.Start(1);
-            new Thread(Write) { Name = "thread_2" }.Start(2);
-            new Thread(Write) { Name = "thread_3" }.Start(3);
-        }
-        private static SemaphoreSlim _semaphore = new SemaphoreSlim(3);
-        [ThreadStatic]
-        private static int _counter;
+        public static void Print(this object obj) => Console.WriteLine(obj);
 
-        private static void Write(object obj)
+        public static void PrettyPrint(this string[] array)
         {
-            int step = (int)obj;
-            string threadName = Thread.CurrentThread.Name;
-            _semaphore.Wait();
-            for (int i = 0; i < 10; i += step)
+            foreach (var item in array)
             {
-                Thread.Sleep(500);
-                Console.WriteLine($"{threadName} arriving - index {i} - pool {_counter++}");
+                Console.WriteLine("\t" + item);
             }
-            _semaphore.Release();
+        }
+
+        public static string Flatten<T>(this IEnumerable<T> items)
+        {
+            return string.Join(",", items.Select(x => x.ToString()));
         }
     }
 }
