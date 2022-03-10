@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Barrirer.cs" />
     <Compile Include="Deadlock.cs" />
+    <Compile Include="DelegateProcessor.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Semaphore.cs" />

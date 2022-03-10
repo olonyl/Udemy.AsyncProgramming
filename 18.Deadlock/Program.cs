@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace _18.Deadlock
 {
@@ -15,57 +16,56 @@ namespace _18.Deadlock
             //Barrirer.Run();
             //Semaphore.Run();
 
-            DelegateProcessor.Run();
+            //DelegateProcessor.Run();
+
+            //Console.WriteLine(SyncApi.GetWebResource("https://google.com"));
+            Console.WriteLine("test01");
+            CallAsyncOperation();
+            Console.WriteLine("test02");
+            Console.WriteLine();
+            Console.WriteLine();
+
 
             Console.Read();
         }
-    }
 
-    internal class DelegateProcessor
-    {
-        public static void Run()
+        private static async void CallAsyncOperation()
         {
-            Delegate();
-        }
-        private static void Exit()
-        {
-
-        }
-        private static void Delegate()
-        {
-            int[] items = Enumerable.Range(0, 7).ToArray();
-
-            IEnumerable<int> result = items.Where(IsEven);
-
-
-            Func<int, bool> even = IsEven;
-            even = i => i % 2 == 0;
-
-            string value = result.Flatten();
-            Console.WriteLine(value);
-        }
-
-        private static bool IsEven(int i)
-        {
-            return i % 2 == 0;
+            var result = await AsynApi.GetWebResource("https://google.com");
+            Console.WriteLine(result);
         }
     }
 
-    public static class Extensions
+    internal class SyncApi
     {
-        public static void Print(this object obj) => Console.WriteLine(obj);
-
-        public static void PrettyPrint(this string[] array)
+        public static string GetWebResource(string url)
         {
-            foreach (var item in array)
+            try
             {
-                Console.WriteLine("\t" + item);
+                var client = WebRequest.Create(url);
+                var response = client.GetResponse();
+
+                using (var reader = new StreamReader(response.GetResponseStream()))
+                {
+                    var strResponse = reader.ReadToEnd();
+                    return strResponse;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex);
+                return null;
             }
         }
+    }
 
-        public static string Flatten<T>(this IEnumerable<T> items)
+    internal class AsynApi
+    {
+        public static async Task<string> GetWebResource(string url)
         {
-            return string.Join(",", items.Select(x => x.ToString()));
+            var task = await Task.Run(() => SyncApi.GetWebResource(url));
+            return task;
         }
     }
 }
