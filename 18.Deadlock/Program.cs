@@ -11,8 +11,8 @@ namespace _18.Deadlock
             // Deadlock.Improved();
             //Deadlock.LockWithTimedMonitor();
 
-            //            Barrirer.Run();
-            Semaphore.Run();
+            Barrirer.Run();
+            //Semaphore.Run();
 
 
             Console.Read();
